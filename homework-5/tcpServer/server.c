@@ -8,27 +8,9 @@
 
 #define PORT 35352
 #define BACKLOG 1
-#define MAXBUF 1024
-
-void reverse(char *str, int len)
-{
-    char *strLeft = str;
-    char *strRight = str + len - 1;
-
-    while(strRight > strLeft)
-    {
-        char temp = *strLeft;
-        *strLeft = *strRight;
-        *strRight = temp;
-        --strRight;
-        ++strLeft;
-    }
-}
 
 int main(void)
 {
-    char buffer[MAXBUF];
-    int receivedBytes = -2;
     socklen_t clientaddrLen;
     int listenfd, connectfd;
     struct sockaddr_in clientaddr;
@@ -73,27 +55,6 @@ int main(void)
         printf("You got a connection from client,IP is %s, PORT is %d\n",
                  inet_ntoa(clientaddr.sin_addr), ntohs(clientaddr.sin_port));
 
-        /*recieve data*/
-        while(1)
-        {
-            receivedBytes = recv(connectfd, buffer, MAXBUF, 0);
-            if(-1 == receivedBytes)
-            {
-                perror("receive data error");
-                break;
-            }
-            else if (0 == receivedBytes)
-            {
-                /*printf("network disconnected accidentally.\n");*/
-                break;
-            }
-
-            buffer[receivedBytes] = '\0';
-            reverse(buffer, receivedBytes);
-            /*send data*/
-            send(connectfd, buffer, strlen(buffer), 0);
-        }
-        /*printf("close.\n");*/
         close(connectfd);
     }
 

@@ -6,7 +6,7 @@
 #include <stdio.h>
 #include <string.h>
 
-#define PORT 35352
+#define PORT 35351
 #define BACKLOG 1
 
 int main(void)

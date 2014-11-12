@@ -219,7 +219,7 @@ int main(void)
                     buffer[receivedBytes] = '\0';
                     printf("%s,%d:%s\n", tmpClientInfo->ip, tmpClientInfo->port, buffer);
                     addInput(tmpClientInfo, buffer);
-                    send(connectfd, buffer, strlen(buffer), 0);
+                    send(sockfd, buffer, strlen(buffer), 0);
                 }
 
                 if (--nready <= 0)
